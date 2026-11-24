@@ -4,4 +4,4 @@ __pycache__/
 venv/
 .venv/
 smartbank.db
-*.db
+*.dbfix_phone.py
