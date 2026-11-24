@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | SmartBank</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .navbar {
+            background: #0b3d62;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #0b3d62;
+            margin-bottom: 20px;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            color: #0b3d62;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #0b3d62;
+        }
+        .danger-btn {
+    background: #b02a37;
+}
+
+        .flash-message {
+            background: #e7f6ec;
+            color: #1e7e34;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>SmartBank</h1>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/transfer">Transfer</a>
+            <a href="/history">History</a>
+            <a href="/goals">Goals</a>
+            <a href="/scam-awareness">Scam Awareness</a>
+            <a href="/pocket-mentor">Pocket Mentor</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>My Profile</h2>
+
+            {% with messages = get_flashed_messages() %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <div class="profile-row">
+                <span class="label">Full Name</span>
+                <span class="value">{{ user['full_name'] }}</span>
+            </div>
+
+            <div class="profile-row">
+                <span class="label">Account Number</span>
+                <span class="value">{{ user['account_number'] }}</span>
+            </div>
+
+            <div class="profile-row">
+                <span class="label">Email</span>
+                <span class="value">{{ user['email'] }}</span>
+            </div>
+
+            <div class="profile-row">
+                <span class="label">Phone Number</span>
+                <span class="value">{{ user['phone'] }}</span>
+            </div>
+
+            <div class="profile-row">
+                <span class="label">Account Balance</span>
+                <span class="value">Rs. {{ user['balance'] }}</span>
+            </div>
+ <form method="POST" action="/request-deactivation"
+      onsubmit="return confirm('Are you sure you want to request account deactivation? You will not be able to log in after approval.');">
+    <button type="submit" class="danger-btn">Request Account Deactivation</button>
+</form>
+
+            <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>  

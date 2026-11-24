@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management | SmartBank Admin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .navbar {
+            background: #08243a;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #08243a;
+            margin-bottom: 15px;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-form button {
+            background: #08243a;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .clear-btn {
+            background: #e5e7eb;
+            color: #08243a;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 18px;
+            background: #08243a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f6fa;
+        }
+
+        .active {
+            color: #1e7e34;
+            font-weight: bold;
+        }
+
+        .blocked {
+            color: #b02a37;
+            font-weight: bold;
+        }
+
+        .block-btn {
+            background: #b02a37;
+        }
+
+        .unblock-btn {
+            background: #1e7e34;
+        }
+
+        .delete-btn {
+            background: #b02a37;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: #08243a;
+        }
+        .pending-status {
+    color: #b45309;
+    font-weight: bold;
+}
+
+        .flash-message {
+            background: #e7f6ec;
+            color: #1e7e34;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>SmartBank Admin</h1>
+        <div>
+            <a href="/admin">Admin Dashboard</a>
+            <a href="/admin-users">User Management</a>
+            <a href="/audit-logs">Audit Logs</a>
+            <a href="/admin-analytics">Analytics</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="card">
+            <h2>Search Users</h2>
+
+            <form method="GET" action="/admin-users" class="search-form">
+                <input type="text" name="search"
+                       placeholder="Search by name, account number, or email"
+                       value="{{ search }}"
+                       required>
+
+                <select name="status">
+                    <option value="">All Users</option>
+                    <option value="active" {% if status == 'active' %}selected{% endif %}>Active Users</option>
+                    <option value="blocked" {% if status == 'blocked' %}selected{% endif %}>Blocked Users</option>
+                </select>
+
+                <button type="submit">Search</button>
+                <a href="/admin-users" class="clear-btn">Clear</a>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>All Users</h2>
+
+            {% if users %}
+                <table>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Account Number</th>
+                        <th>Email</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user['full_name'] }}</td>
+                            <td>{{ user['account_number'] }}</td>
+                            <td>{{ user['email'] }}</td>
+                            <td>Rs. {{ user['balance'] }}</td>
+
+                            <td class="{{ user['status'] }}">
+                                {{ user['status'] }}
+                            </td>
+
+                            <td>
+                                {% if user['status'] == 'active' %}
+                                    <form method="POST" action="/block-user">
+                                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+                                        <button type="submit" class="block-btn">Block</button>
+                                    </form>
+                                {% else %}
+                                    <form method="POST" action="/unblock-user">
+                                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+                                        <button type="submit" class="unblock-btn">Unblock</button>
+                                    </form>
+                                {% endif %}
+
+                                {% if user['id'] != 1 %}
+                                    <form method="POST" action="/delete-user"
+                                          onsubmit="return confirm('Are you sure you want to permanently delete this user? This cannot be undone.');">
+                                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+                                        <button type="submit" class="delete-btn">Delete</button>
+                                    </form>
+                                    
+                                {% endif %}
+                                {% if user['status'] == 'deactivation_requested' %}
+    <span class="pending-status">Deactivation Requested</span>
+
+    <form method="POST" action="/approve-deactivation"
+          onsubmit="return confirm('Are you sure you want to deactivate this account?');">
+        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+        <button type="submit" class="block-btn">Approve Deactivation</button>
+    </form>
+{% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No users found.</p>
+            {% endif %}
+        </div>
+
+        <a href="/admin" class="back-btn">Back to Admin Dashboard</a>
+    </div>
+
+</body>
+</html>

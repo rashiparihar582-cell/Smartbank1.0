@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Awareness | SmartBank</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .navbar {
+            background: #0b3d62;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #0b3d62;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #0b3d62;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p,
+        li {
+            color: #444;
+            line-height: 1.6;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .warning {
+            background: #fff4e5;
+            border-left: 5px solid #f39c12;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .danger {
+            background: #fdecea;
+            border-left: 5px solid #b02a37;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .safe {
+            background: #e7f6ec;
+            border-left: 5px solid #1e7e34;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: #0b3d62;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>SmartBank</h1>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/scam-awareness">Scam Awareness</a>
+            <a href="/logout">Logout</a>
+            <a href="/pocket-mentor">Pocket Mentor</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>Stay Safe From Scams</h2>
+
+            <p>
+                Online banking scams are designed to steal your money, password, PIN, OTP,
+                or personal information. Always stay alert before sharing any banking detail.
+            </p>
+
+            <div class="danger">
+                <strong>Never share:</strong>
+                Password, transaction PIN, OTP, CVV, UPI PIN, card number, or bank account
+                details with anyone. A real bank employee will never ask for these.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Common Scams</h2>
+
+            <h3>1. Phishing messages</h3>
+            <p>
+                Scammers may send fake emails or SMS messages that look like they are from a bank.
+                They often create urgency, such as “your account will be blocked” or “verify your details now.”
+            </p>
+
+            <div class="warning">
+                Do not click unknown links. Always open the official website by typing its address yourself.
+            </div>
+
+            <h3>2. Fake customer care calls</h3>
+            <p>
+                A caller may claim to be from your bank and ask for an OTP, PIN, or card details
+                to “stop a fraud” or “verify your account.”
+            </p>
+
+            <div class="danger">
+                Never share OTP, PIN, CVV, or UPI PIN on a call. Hang up and contact your bank
+                using the official number from its website.
+            </div>
+
+            <h3>3. UPI QR code scam</h3>
+            <p>
+                To receive money, you only need to scan a QR code or share your UPI ID.
+                You should never enter a UPI PIN to receive money.
+            </p>
+
+            <div class="warning">
+                If someone asks you to enter a UPI PIN to “receive” money, it is likely a scam.
+            </div>
+
+            <h3>4. Fake investment or lottery offers</h3>
+            <p>
+                Messages promising guaranteed returns, lottery winnings, cashback, or easy loans
+                can be fraud attempts.
+            </p>
+
+            <div class="danger">
+                Do not pay an advance fee to receive a prize, loan, refund, or investment return.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Safe Banking Habits</h2>
+
+            <ul>
+                <li>Use a strong password and change it regularly.</li>
+                <li>Never save banking passwords or PINs in notes, messages, or email.</li>
+                <li>Do not use public Wi-Fi for banking transactions.</li>
+                <li>Check the website address before entering login details.</li>
+                <li>Review your transaction history regularly.</li>
+                <li>Report suspicious activity to your bank immediately.</li>
+            </ul>
+
+            <div class="safe">
+                <strong>Remember:</strong> If a message creates panic, promises easy money,
+                or asks for OTP/PIN, stop and verify through official channels.
+            </div>
+        </div>
+
+        <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History | SmartBank</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .navbar {
+            background: #0b3d62;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #0b3d62;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #0b3d62;
+            color: white;
+        }
+
+        .credit {
+            color: #1e7e34;
+            font-weight: bold;
+        }
+
+        .debit {
+            color: #b02a37;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: #0b3d62;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>SmartBank</h1>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/scam-awareness">Scam Awareness</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Transaction History</h2>
+
+            {% if transactions %}
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Balance After</th>
+                    </tr>
+
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction['created_at'] }}</td>
+
+                            {% if transaction['type'] == 'credit' %}
+                                <td class="credit">Credit</td>
+                            {% else %}
+                                <td class="debit">Debit</td>
+                            {% endif %}
+
+                            <td>Rs. {{ transaction['amount'] }}</td>
+                            <td>{{ transaction['category'] }}</td>
+                            <td>{{ transaction['description'] }}</td>
+                            <td>Rs. {{ transaction['balance_after'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p class="empty">No transactions yet.</p>
+            {% endif %}
+
+            <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>

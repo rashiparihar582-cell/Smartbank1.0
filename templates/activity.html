@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Activity | SmartBank</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .navbar {
+            background: #0b3d62;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #0b3d62;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f6fa;
+        }
+
+        .credit {
+            color: #1e7e34;
+            font-weight: bold;
+        }
+
+        .debit {
+            color: #b02a37;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #1e7e34;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: #0b3d62;
+        }
+
+        .flash-message {
+            background: #e7f6ec;
+            color: #1e7e34;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>SmartBank</h1>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/transfer">Transfer</a>
+            <a href="/history">History</a>
+            <a href="/goals">Goals</a>
+            <a href="/scam-awareness">Scam Awareness</a>
+            <a href="/insights">Insights</a>
+            <a href="/report">Report</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="card">
+            <h2>Recent Transactions</h2>
+
+            {% if transactions %}
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                    </tr>
+
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction['created_at'] }}</td>
+                            <td class="{{ transaction['type'] }}">{{ transaction['type'] }}</td>
+                            <td>Rs. {{ transaction['amount'] }}</td>
+                            <td>{{ transaction['category'] }}</td>
+                            <td>{{ transaction['description'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No recent transactions.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Recent Transfers</h2>
+
+            {% if transfers %}
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+
+                    {% for transfer in transfers %}
+                        <tr>
+                            <td>{{ transfer['created_at'] }}</td>
+                            <td>Rs. {{ transfer['amount'] }}</td>
+                            <td class="success">{{ transfer['status'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No recent transfers.</p>
+            {% endif %}
+        </div>
+
+        <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

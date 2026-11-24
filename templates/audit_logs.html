@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Logs | SmartBank Admin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .navbar {
+            background: #08243a;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #08243a;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f6fa;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: #08243a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>SmartBank Admin</h1>
+        <div>
+            <a href="/admin">Admin Dashboard</a>
+            <a href="/admin-users">User Management</a>
+            <a href="/audit-logs">Audit Logs</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>System Audit Logs</h2>
+
+            {% if logs %}
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>User ID</th>
+                        <th>Action</th>
+                        <th>Details</th>
+                    </tr>
+
+                    {% for log in logs %}
+                        <tr>
+                            <td>{{ log['created_at'] }}</td>
+                            <td>{{ log['user_id'] }}</td>
+                            <td>{{ log['action'] }}</td>
+                            <td>{{ log['details'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No audit logs yet.</p>
+            {% endif %}
+        </div>
+
+        <a href="/admin" class="back-btn">Back to Admin Dashboard</a>
+    </div>
+
+</body>
+</html>

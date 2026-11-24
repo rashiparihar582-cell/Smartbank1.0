@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Mentor | SmartBank</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .navbar {
+            background: #0b3d62;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #0b3d62;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+        }
+
+        .message {
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            max-width: 85%;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            background: #0b3d62;
+            color: white;
+            margin-left: auto;
+        }
+
+        .mentor-message {
+            background: #e7f6ec;
+            color: #1f2937;
+        }
+
+        .scam-message {
+            background: #fdecea;
+            color: #7f1d1d;
+            border-left: 5px solid #b02a37;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #0b3d62;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quick-buttons button {
+            background: #e5e7eb;
+            color: #0b3d62;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: #0b3d62;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>SmartBank</h1>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/scam-awareness">Scam Awareness</a>
+            <a href="/pocket-mentor">Pocket Mentor</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Pocket Mentor</h2>
+
+            <p>
+                Ask banking questions or paste a suspicious message. Pocket Mentor will guide you,
+                but it does not replace your bank’s official support.
+            </p>
+
+            <div class="chat-box">
+                {% for chat in chat_history %}
+                    <div class="message {{ chat['type'] }}">
+                        {{ chat['text'] }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <form method="POST" action="/pocket-mentor">
+                <input type="text" name="user_message"
+                       placeholder="Ask: What is OTP? / Check this message..."
+                       required>
+
+                <button type="submit">Send</button>
+            </form>
+
+            <div class="quick-buttons">
+                <form method="POST" action="/pocket-mentor">
+                    <input type="hidden" name="user_message" value="What is OTP?">
+                    <button type="submit">What is OTP?</button>
+                </form>
+
+                <form method="POST" action="/pocket-mentor">
+                    <input type="hidden" name="user_message" value="What is UPI?">
+                    <button type="submit">What is UPI?</button>
+                </form>
+
+                <form method="POST" action="/pocket-mentor">
+                    <input type="hidden" name="user_message" value="Check this message: Your account will be blocked, click this link and enter OTP">
+                    <button type="submit">Check fake message</button>
+                </form>
+            </div>
+
+            <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>
